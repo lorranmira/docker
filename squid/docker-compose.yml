@@ -1,0 +1,10 @@
+version: '2'
+services:
+  squid_proxy:
+    image: squid
+    ports:
+      - "3128:3128"
+    volumes:
+      - /docker/squid/cache:/var/spool/squid3
+      - /docker/containers/squid/log:/var/log/squid3
+    restart: always
