@@ -10,7 +10,8 @@ RUN apt-get -q update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN sed -i "s:^#acl localnet src 10.0.0.0/8:acl localnet src ${LOCAL_NETWORK}:" /etc/squid3/squid.conf \
+RUN cp /etc/squid3/squid.conf /etc/squid3/squid.conf.dist
+    && sed -i "s:^#acl localnet src 10.0.0.0/8:acl localnet src ${LOCAL_NETWORK}:" /etc/squid3/squid.conf \
     && sed -i "s/^#http_access allow localnet/http_access allow localnet/" /etc/squid3/squid.conf \
     && mkdir -p /var/cache/squid3 \
     && chown -R proxy:proxy /var/cache/squid3
