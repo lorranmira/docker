@@ -7,9 +7,9 @@ sudo /etc/init.d/apache2 start
 echo "running startSquidGuard with WPAD_IP=${WPAD_IP} WPAD_NOPROXY_NET=${WPAD_NOPROXY_NET} WPAD_NOPROXY_MASK=${WPAD_NOPROXY_MASK}"
 
 if [  "${WPAD_IP}" != "" ]; then
-	sed 's/{{WPAD_IP}}/'"${WPAD_IP}"'/' -i /var/www/html/wpad.dat
-	sed 's/{{WPAD_NOPROXY_NET}}/'"${WPAD_NOPROXY_NET}"'/' -i /var/www/html/wpad.dat
-	sed 's/{{WPAD_NOPROXY_MASK}}/'"${WPAD_NOPROXY_MASK}"'/' -i /var/www/html/wpad.dat
+    sed -i "s/{{WPAD_IP}}/${WPAD_IP}/" /var/www/html/wpad.dat
+    sed -i "s/{{WPAD_NOPROXY_NET}}/${WPAD_NOPROXY_NET}/" /var/www/html/wpad.dat
+    sed -i "s/{{WPAD_NOPROXY_MASK}}/${WPAD_NOPROXY_MASK}/" /var/www/html/wpad.dat
 
 	# start apache to serve wpad.dat file
 	sudo /etc/init.d/apache2 restart
