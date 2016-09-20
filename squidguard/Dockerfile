@@ -6,11 +6,11 @@ ENV SQUID_LOG_DIR=/var/log/squid3 \
     WPAD_NOPROXY_MASK="255.255.255.0" \
     WPAD_IP="10.1.1.101"
 
-RUN sudo echo 'AddType application/x-ns-proxy-autoconfig .dat' >> /etc/apache2/httpd.conf
-
 RUN apt-get install -y squidguard apache2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN sudo echo 'AddType application/x-ns-proxy-autoconfig .dat' >> /etc/apache2/httpd.conf
 
 RUN wget http://www.shallalist.de/Downloads/shallalist.tar.gz \
     && tar -xzf shallalist.tar.gz -C /var/lib/squidguard/db \
@@ -29,6 +29,6 @@ RUN sudo chmod a+x /startSquidGuard
 RUN sudo -u proxy squidGuard -C all
 
 EXPOSE 3128 80
-VOLUME ["/var/spool/squid3"]
+VOLUME ["/var/spool/squid3", "/var/log/squidguard", "/var/www/html/"]
 
 CMD ["/startSquidGuard"]
