@@ -23,7 +23,8 @@ RUN sed -i "s:^access_log /var/log/squid/access.log:access_log ${SQUID_LOG_DIR}/
     && echo "127.0.0.1" >> /etc/sarg/exclude_hosts \
     && mkdir -p /var/www/html/squid-reports \
     && sed -i "s/{{LOCAL_NETWORK}}/${LOCAL_NETWORK}/" /etc/apache2/conf-available/sarg.conf \
-    && sudo /etc/init.d/apache2 restart
+    && sudo /etc/init.d/apache2 restart \
+    && /usr/bin/sarg
 
 EXPOSE 3128 80
 VOLUME ["/var/spool/squid3", "/var/log/squidguard", "/var/www/html/"]

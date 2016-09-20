@@ -8,5 +8,8 @@ sed -i "s/{{LOCAL_NETWORK}}/${LOCAL_NETWORK}/" /etc/apache2/conf-available/sarg.
 # restart apache to serve pages
 sudo /etc/init.d/apache2 restart
 
+# Generate initial reports
+sudo /usr/bin/sarg
+
 # run original squid start script
 exec /sbin/entrypoint.sh
