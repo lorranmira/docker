@@ -23,5 +23,5 @@ COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 3128/tcp
-VOLUME ["${SQUID_CACHE_DIR}", "/etc/squid3", "${SQUID_LOG_DIR}"]
+VOLUME ["${SQUID_CACHE_DIR}", "${SQUID_LOG_DIR}"]
 ENTRYPOINT ["/sbin/entrypoint.sh"]
