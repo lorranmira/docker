@@ -1,7 +1,10 @@
 version: '2'
 services:
-  squid_proxy:
-    image: squid
+  squid:
+    build: .
+    #image: squid
+    environment:
+      - LOCAL_NETWORK="10.1.1.0/24"
     ports:
       - "3128:3128"
     volumes:

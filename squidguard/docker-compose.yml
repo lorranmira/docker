@@ -1,0 +1,18 @@
+version: '2'
+services:
+  squidguard:
+    build: .
+    #image: squidguard
+    environment:
+    # WPAD is optional
+    - WPAD_IP=10.1.1.101
+    - WPAD_NOPROXY_NET=10.1.1.0
+    - WPAD_NOPROXY_MASK=255.255.255.0
+    ports:
+      - "3128:3128"
+      - "80:80"
+    volumes:
+      - /docker/squid/cache:/var/spool/squid3
+      - /docker/containers/squid/log:/var/log/squid3
+      - /docker/containers/squidguard/log:/var/log/squidguard
+    restart: always
