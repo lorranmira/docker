@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ ! -d "$DIRECTORY" ]; then
+    echo "Making dir [/var/www/html/squid-reports]"
+    mkdir -p /var/www/html/squid-reports
+fi
+
 echo "running Sarg with LOCAL_NETWORK=${LOCAL_NETWORK}"
 
 sed -i "s:{{LOCAL_NETWORK}}:${LOCAL_NETWORK}:" /etc/apache2/conf-available/sarg.conf
