@@ -23,9 +23,9 @@ RUN sed -i "s:^access_log /var/log/squid/access.log:access_log ${SQUID_LOG_DIR}/
     && sed -i "s:^charset Latin1:charset UTF-8:" /etc/sarg/sarg.conf \
     && echo "127.0.0.1" >> /etc/sarg/exclude_hosts \
     && mkdir -p /var/www/html/squid-reports \
-    && chmod a+x /startSquidGuard
+    && chmod a+x /startSarg
 
 EXPOSE 3128 80
 VOLUME ["/var/spool/squid3", "/var/log/squidguard", "/var/www/html/"]
 
-CMD ["/startSquidGuard"]
+CMD ["/startSarg"]
