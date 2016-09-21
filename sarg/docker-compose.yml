@@ -1,0 +1,15 @@
+version: '2'
+services:
+  sarg:
+    build: .
+    #image: sarg
+    environment:
+    - LOCAL_NETWORK="10.1.1.0/24"
+    ports:
+      - "3128:3128"
+      - "80:80"
+    volumes:
+      - /docker/squid/cache:/var/spool/squid3
+      - /docker/containers/squid/log:/var/log/squid3
+      - /docker/containers/proxy/www/squid-reports:/var/www/html/squid-reports
+    restart: always
