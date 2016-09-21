@@ -3,7 +3,7 @@ set -e
 
 echo "running Sarg with LOCAL_NETWORK=${LOCAL_NETWORK}"
 
-sed -i "s/{{LOCAL_NETWORK}}/${LOCAL_NETWORK}/" /etc/apache2/conf-available/sarg.conf
+sed -i "s:{{LOCAL_NETWORK}}:${LOCAL_NETWORK}:" /etc/apache2/conf-available/sarg.conf
 
 # restart apache to serve pages
 sudo /etc/init.d/apache2 restart
