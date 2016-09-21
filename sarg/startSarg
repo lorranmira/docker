@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ ! -d "$DIRECTORY" ]; then
+if [ ! -d "/var/www/html/squid-report" ]; then
     echo "Making dir [/var/www/html/squid-reports]"
     mkdir -p /var/www/html/squid-reports
 fi
