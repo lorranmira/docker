@@ -23,6 +23,9 @@ create_log_dir
 create_cache_dir
 apply_backward_compatibility_fixes
 
+# Start cron daemon so that logs can be rotated.  Need for Sarg etc
+exec /etc/init.d/cron start
+
 # allow arguments to be passed to squid3
 if [[ ${1:0:1} = '-' ]]; then
   EXTRA_ARGS="$@"
