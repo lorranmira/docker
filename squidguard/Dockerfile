@@ -17,18 +17,17 @@ RUN wget http://www.shallalist.de/Downloads/shallalist.tar.gz \
     && tar -xzf shallalist.tar.gz -C /var/lib/squidguard/db \
     && rm shallalist.tar.gz \
     && chown -R proxy:proxy /var/lib/squidguard/db \
-    && echo "redirect_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf" >> /etc/squid3/squid.conf
+    && echo "redirect_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf" >> /etc/squid3/squid.conf \
+    && mv /sbin/entrypoint.sh /sbin/entrypoint_pre_squidguard.sh
 
 COPY wpad.dat /var/www/html/wpad.dat
 COPY block.html /var/www/html/block.html
 COPY squidGuard.conf /etc/squidguard/squidGuard.conf
-COPY startSquidGuard /startSquidGuard
+COPY startSquidGuard /sbin/entrypoint.sh
 
-RUN chmod a+x /startSquidGuard
-
-#RUN sudo -u proxy squidGuard -C all
+RUN chmod a+x /sbin/entrypoint.sh
 
 EXPOSE 3128 80
 VOLUME ["/var/spool/squid3", "/var/log/squidguard", "/var/www/html/"]
 
-CMD ["/startSquidGuard"]
+CMD ["/sbin/entrypoint.sh"]

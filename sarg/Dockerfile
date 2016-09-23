@@ -10,11 +10,12 @@ RUN apt-get -q update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mv /etc/sarg/sarg.conf /etc/sarg/sarg.conf.dist
+RUN mv /etc/sarg/sarg.conf /etc/sarg/sarg.conf.dist \
+    && mv /sbin/entrypoint.sh /sbin/entrypoint_pre_sarg.sh
 
 COPY sarg.conf /etc/sarg/sarg.conf
 COPY sarg_apache.conf /etc/apache2/conf-available/sarg.conf
-COPY startSarg /startSarg
+COPY entrypoint.sh /sbin/entrypoint.sh
 
 RUN sed -i "s:^access_log /var/log/squid/access.log:access_log ${SQUID_LOG_DIR}/access.log:" /etc/sarg/sarg.conf \
     && sed -i "s:^#output_dir /var/www/html/squid-reports:output_dir /var/www/html/squid-reports:" /etc/sarg/sarg.conf \
@@ -23,9 +24,9 @@ RUN sed -i "s:^access_log /var/log/squid/access.log:access_log ${SQUID_LOG_DIR}/
     && sed -i "s:^charset Latin1:charset UTF-8:" /etc/sarg/sarg.conf \
     && echo "127.0.0.1" >> /etc/sarg/exclude_hosts \
     && mkdir -p /var/www/html/squid-reports \
-    && chmod a+x /startSarg
+    && chmod a+x /sbin/entrypoint.sh
 
 EXPOSE 3128 80
 VOLUME ["/var/spool/squid3", "/var/log/squidguard", "/var/www/html/"]
 
-CMD ["/startSarg"]
+CMD ["/sbin/entrypoint.sh"]

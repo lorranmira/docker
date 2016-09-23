@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "running startSquidGuard with WPAD_IP=${WPAD_IP} WPAD_NOPROXY_NET=${WPAD_NOPROXY_NET} WPAD_NOPROXY_MASK=${WPAD_NOPROXY_MASK}"
+echo "running squidGuard with WPAD_IP=${WPAD_IP} WPAD_NOPROXY_NET=${WPAD_NOPROXY_NET} WPAD_NOPROXY_MASK=${WPAD_NOPROXY_MASK}"
 
 if [  "${WPAD_IP}" != "" ]; then
     sed -i "s/{{WPAD_IP}}/${WPAD_IP}/" /var/www/html/wpad.dat
@@ -13,4 +13,4 @@ fi
 sudo /etc/init.d/apache2 restart
 
 # run original squid start script
-exec /sbin/entrypoint.sh
+exec /sbin/entrypoint_pre_squidguard.sh
