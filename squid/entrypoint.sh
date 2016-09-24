@@ -13,18 +13,15 @@ create_cache_dir() {
 }
 
 apply_backward_compatibility_fixes() {
-  if [[ -f /etc/squid3/squid.user.conf ]]; then
-    rm -rf /etc/squid3/squid.conf
-    ln -sf /etc/squid3/squid.user.conf /etc/squid3/squid.conf
+  if [[ -f /etc/squid/squid.user.conf ]]; then
+    rm -rf /etc/squid/squid.conf
+    ln -sf /etc/squid/squid.user.conf /etc/squid3/squid.conf
   fi
 }
 
 create_log_dir
 create_cache_dir
 apply_backward_compatibility_fixes
-
-# Start cron daemon so that logs can be rotated.  Need for Sarg etc
-exec /etc/init.d/cron start
 
 # allow arguments to be passed to squid3
 if [[ ${1:0:1} = '-' ]]; then
@@ -39,10 +36,10 @@ fi
 if [[ -z ${1} ]]; then
   if [[ ! -d ${SQUID_CACHE_DIR}/00 ]]; then
     echo "Initializing cache..."
-    $(which squid3) -N -f /etc/squid3/squid.conf -z
+    $(which squid) -N -f /etc/squid/squid.conf -z
   fi
-  echo "Starting squid3..."
-  exec $(which squid3) -f /etc/squid3/squid.conf -NYCd 1 ${EXTRA_ARGS}
+  echo "Starting squid..."
+  exec $(which squid) -f /etc/squid/squid.conf -NYCd 1 ${EXTRA_ARGS}
 else
   exec "$@"
 fi
