@@ -5,7 +5,10 @@ WORKDIR ${LOGSTASH_HOME}
 RUN gosu logstash bin/logstash-plugin install logstash-input-syslog
 
 # overwrite existing file
-ADD logstash/config/30-elasticsearch-output.conf /etc/logstash/conf.d/30-output.conf
+ADD ./logstash/config/30-elasticsearch-output.conf /etc/logstash/conf.d/30-output.conf
+
+# Move file from parent image
+RUN mv /etc/logstash/conf.d/10-syslog.conf /etc/logstash/conf.d/10-syslog.conf.BAK
 
 # add new files
 COPY ./logstash/config/05-syslog-input.conf ./logstash/config/06-save-full-message.conf \
