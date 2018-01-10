@@ -8,7 +8,14 @@
 
 elk:
   build: .
+
+  environment:
+    - "TZ=Pacific/Auckland"
   
+  volumes:
+  # Specify an absolute path mapping
+  #- /opt/data:/var/lib/elasticsearch
+
   # 5601 (Kibana web interface).
   # 9200 (Elasticsearch JSON interface).
   # 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat
