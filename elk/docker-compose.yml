@@ -1,0 +1,19 @@
+# Docker Compose file for ELK stack
+
+# Build with:
+# docker-compose build elk
+
+# Run with:
+# docker-compose up
+
+elk:
+  build: .
+  
+  # 5601 (Kibana web interface).
+  # 9200 (Elasticsearch JSON interface).
+  # 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat
+  ports:
+    - "514:514"
+    - "5601:5601"
+    - "9200:9200"
+    - "5044:5044"
