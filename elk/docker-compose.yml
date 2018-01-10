@@ -14,7 +14,8 @@ elk:
   
   #volumes:
   # Specify an absolute path mapping
-  #- /opt/data:/var/lib/elasticsearch
+  #- /opt/elk/data:/var/lib/elasticsearch
+  #- /opt/elk/log:/var/log
 
   # 5601 (Kibana web interface).
   # 9200 (Elasticsearch JSON interface).
