@@ -12,7 +12,7 @@ elk:
   environment:
     - "TZ=Pacific/Auckland"
   
-  volumes:
+  #volumes:
   # Specify an absolute path mapping
   #- /opt/data:/var/lib/elasticsearch
 
