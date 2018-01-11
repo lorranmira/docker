@@ -5,7 +5,6 @@ WORKDIR ${LOGSTASH_HOME}
 RUN gosu logstash bin/logstash-plugin install logstash-input-syslog
 
 # Remove existing file
-#ADD ./logstash/config/30-elasticsearch-output.conf /etc/logstash/conf.d/30-output.conf
 RUN rm -rf /etc/logstash/conf.d/30-output.conf
 
 # Move file from parent image
