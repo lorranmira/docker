@@ -14,10 +14,12 @@ services:
     environment:
       - TZ="Pacific/Auckland"
 
-    #volumes:
-    # Specify an absolute path mapping
-    #- /opt/elk/data:/var/lib/elasticsearch
-    #- /opt/elk/log:/var/log
+    volumes:
+    # directory for all stored log messages
+      - /opt/elk/data:/var/lib/elasticsearch
+    # Program logs for elasticsearch|kibana|logstash
+      - /opt/elk/log:/var/log
+    # WARNING: User needs to create {elasticsearch|logstash|kibana} under log
 
     #  514 (Logstash syslog interface, receives logs for syslog clients)
     # 5601 (Kibana web interface).
