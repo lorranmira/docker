@@ -4,8 +4,9 @@ FROM sebp/elk
 WORKDIR ${LOGSTASH_HOME}
 RUN gosu logstash bin/logstash-plugin install logstash-input-syslog
 
-# overwrite existing file
-ADD ./logstash/config/30-elasticsearch-output.conf /etc/logstash/conf.d/30-output.conf
+# Remove existing file
+#ADD ./logstash/config/30-elasticsearch-output.conf /etc/logstash/conf.d/30-output.conf
+RUN rm -rf /etc/logstash/conf.d/30-output.conf
 
 # Move file from parent image
 RUN mv /etc/logstash/conf.d/10-syslog.conf /etc/logstash/conf.d/10-syslog.conf.BAK
@@ -13,5 +14,5 @@ RUN mv /etc/logstash/conf.d/10-syslog.conf /etc/logstash/conf.d/10-syslog.conf.B
 # add new files
 COPY ./logstash/config/ /etc/logstash/conf.d
 
-# Expose TCP ports
-EXPOSE 514 5601 9200 9300 5044
+# Expose TCP/UDP ports
+EXPOSE 514 514/udp 5601 9200 9300 5044
