@@ -24,8 +24,7 @@ services:
     # 9200 (Elasticsearch JSON interface).
     # 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat
     ports:
-      - "514:514"
-      - "514:514/udp"
+      - "514:1514"
       - "5601:5601"
       - "9200:9200"
       - "5044:5044"
