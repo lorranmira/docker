@@ -2,7 +2,7 @@ FROM sebp/elk
 
 # install syslog input plugin
 WORKDIR ${LOGSTASH_HOME}
-RUN gosu logstash bin/logstash-plugin install logstash-input-syslog
+RUN gosu logstash bin/logstash-plugin install logstash-input-syslog logstash-output-file
 
 # Remove existing file
 RUN rm -rf /etc/logstash/conf.d/30-output.conf
