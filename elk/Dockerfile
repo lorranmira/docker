@@ -11,7 +11,7 @@ RUN rm -rf /etc/logstash/conf.d/30-output.conf
 RUN mv /etc/logstash/conf.d/10-syslog.conf /etc/logstash/conf.d/10-syslog.conf.BAK
 
 # add new files
-COPY ./logstash/config/ /etc/logstash/conf.d
+COPY ./logstash/pipeline/ /etc/logstash/conf.d
 
 # Expose TCP/UDP ports
 EXPOSE 514 514/udp 5601 9200 9300 5044
