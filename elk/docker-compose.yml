@@ -23,8 +23,9 @@ services:
       - elastic-stack
     depends_on:
       - elasticsearch
-    volumes:
-      - /opt/elk/log/logstash:/usr/share/logstash/logs
+#   Uncomment below to make data persistent
+#    volumes:
+#      - /opt/elk/log/logstash:/usr/share/logstash/logs
 
   elasticsearch:
     build:
@@ -41,9 +42,10 @@ services:
     ports: [ '9200:9200' ]
     networks:
       - elastic-stack
-    volumes:
-      - /opt/elk/data:/usr/share/elasticsearch/data
-      - /opt/elk/log/elasticsearch:/usr/share/elasticsearch/logs
+#   Uncomment below to make data persistent
+#    volumes:
+#      - /opt/elk/data:/usr/share/elasticsearch/data
+#      - /opt/elk/log/elasticsearch:/usr/share/elasticsearch/logs
 
   kibana:
     build:
