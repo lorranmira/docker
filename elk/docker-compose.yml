@@ -1,33 +1,66 @@
+---
 # Docker Compose file for ELK stack
 
+# Prerequisite:
+# Increase virtual memory settings
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html#vm-max-map-count
+
 # Build with:
-# docker-compose build elk
+# docker-compose build
 
 # Run with:
 # docker-compose up
 
 version: '2'
 services:
-  elk:
-    build: .
-
-    environment:
-      - TZ="Pacific/Auckland"
-
-    volumes:
-    # directory for all stored log messages
-      - /opt/elk/data:/var/lib/elasticsearch
-    # Program logs for elasticsearch|kibana|logstash
-      - /opt/elk/log:/var/log
-    # WARNING: User needs to create {elasticsearch|logstash|kibana} under log
-
-    #  514 (Logstash syslog interface, receives logs for syslog clients)
-    # 5601 (Kibana web interface).
-    # 9200 (Elasticsearch JSON interface).
-    # 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat
+  logstash:
+    build:
+      context: logstash
     ports:
       - "514:1514"
       - "514:1514/udp"
-      - "5601:5601"
-      - "9200:9200"
-      - "5044:5044"
+    networks:
+      - elastic-stack
+    depends_on:
+      - elasticsearch
+    volumes:
+      - /opt/elk/log/logstash:/usr/share/logstash/logs
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+    environment:
+      - cluster.name=docker-cluster
+      - path.logs=/usr/share/elasticsearch/logs
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports: [ '9200:9200' ]
+    networks:
+      - elastic-stack
+    volumes:
+      - /opt/elk/data:/usr/share/elasticsearch/data
+      - /opt/elk/log/elasticsearch:/usr/share/elasticsearch/logs
+
+  kibana:
+    build:
+      context: kibana
+    environment:
+      # Set [server.name] option
+      - SERVER_NAME=kibana.example.org
+      # Set [elasticseach.url] option
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      # Set [logging.quiet] option.  Toe reduce logging to stdout of container
+      - LOGGING_QUIET=true
+    ports: [ '5601:5601' ]
+    networks:
+      - elastic-stack
+    depends_on:
+      - elasticsearch
+
+networks:
+  elastic-stack:
+
