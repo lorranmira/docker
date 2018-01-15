@@ -1,9 +1,15 @@
 #!/bin/bash -e
 
 LOCK_FILE=/var/lock/9_firsttime.lock
+NO_DNS_HOSTS_FILE=/etc/hosts.nodns
 
 if [ -f "$LOCK_FILE" ]; then
 	exit 0
+fi
+
+# Import hosts that are not in DNS
+if [ -f "$NO_DNS_HOSTS_FILE" ]; then
+	cat ${NO_DNS_HOSTS_FILE} >> /etc/hosts
 fi
 
 # Sleep to allow MYSQL server to come up
@@ -13,7 +19,6 @@ sleep 15
 sh -c "cd /opt/librenms && php /opt/librenms/build-base.php"
 
 # Create initial user
-#php /opt/librenms/adduser.php admin admin 10 daniel.olynsma@alliedtelesis.co.nz
 php /opt/librenms/adduser.php manager friend 10 daniel.olynsma@alliedtelesis.co.nz
 
 touch "$LOCK_FILE"
