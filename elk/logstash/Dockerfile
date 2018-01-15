@@ -16,7 +16,4 @@ COPY ./pipeline/ /usr/share/logstash/pipeline
 COPY ./config/ /usr/share/logstash/config
 # ====
 
-# Expose TCP/UDP ports
-EXPOSE 514 514/udp
-
 VOLUME ["/usr/share/logstash/logs"]
