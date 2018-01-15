@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+LOCK_FILE=/var/lock/9_firsttime.lock
+
+if [ -f "$LOCK_FILE" ]; then
+	exit 0
+fi
+
+sleep 5
+
+## Create tables
+sh -c "cd /opt/librenms && php /opt/librenms/build-base.php"
+
+# Create initial user
+php /opt/librenms/adduser.php admin admin 10 daniel.olynsma@alliedtelesis.co.nz
+
+touch "$LOCK_FILE"

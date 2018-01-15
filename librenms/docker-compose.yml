@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  librenms:
+    # image: jarischaefer/docker-librenms
+    build:
+      context: librenms
+    ports:
+      - "80:80"
+#    volumes:
+#      - /my/persistent/directory/logs:/opt/librenms/logs
+#      - /my/persistent/directory/rrd:/opt/librenms/rrd
+    environment:
+      - DB_HOST=db
+      - DB_NAME=librenms
+      - DB_USER=librenms
+      - DB_PASS=secret
+      - POLLERS=16
+      - BASE_URL=http://localhost
+      - ENABLE_SYSLOG=false
+      - TZ="Pacific/Auckland"
+    depends_on:
+      - mysql
+    links:
+      - mysql:db
+
+  mysql:
+    image: mysql:5.6
+#    build:
+#      context: mysql
+    command: --sql-mode=""
+    ports:
+      - "3306:3306"
+#    volumes:
+#      - /my/persistent/directory/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=librenms
+      - MYSQL_USER=librenms
+      - MYSQL_PASSWORD=secret
