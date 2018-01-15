@@ -35,6 +35,7 @@ services:
 #      - /my/persistent/directory/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=secret
+      # These values must match the DB{NAME|USER|PASS} in libreNMS container or server
       - MYSQL_DATABASE=librenms
       - MYSQL_USER=librenms
       - MYSQL_PASSWORD=secret
