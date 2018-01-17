@@ -2,7 +2,6 @@ version: '2'
 
 services:
   librenms:
-    # image: jarischaefer/docker-librenms
     build:
       context: librenms
     ports:
@@ -26,8 +25,6 @@ services:
 
   mysql:
     image: mysql:5.6
-#    build:
-#      context: mysql
     command: --sql-mode=""
     networks:
       - backend
