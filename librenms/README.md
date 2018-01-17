@@ -22,4 +22,4 @@ Then browse to '/root.config/oxidized'
 * Once here open the 'config' file in an editor.  Goto the bottom of the
 file and replace the text in 'X-Auth-Token:' with the Token
 
-Oxidized is not setup to source device info from LibreNMS
+Oxidized is now setup to source device info from LibreNMS
