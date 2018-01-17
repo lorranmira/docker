@@ -40,7 +40,6 @@ services:
       - MYSQL_PASSWORD=secret
 
   oxidized:
-    # image: oxidized/oxidized:latest
     build:
       context: oxidized
     networks:
@@ -51,8 +50,8 @@ services:
       CONFIG_RELOAD_INTERVAL: 600
     depends_on:
       - librenms
-    volumes:
-      - /opt/oxidized:/root/.config/oxidized
+#    volumes:
+#      - /my/persistent/directory:/root/.config/oxidized
 
 networks:
   backend:
