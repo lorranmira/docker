@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+LOCK_FILE=/var/lock/9_firsttime.lock
+
+if [ -f "$LOCK_FILE" ]; then
+	exit 0
+fi
+
+# Copy to default files to working dir
+cp /tmp/oxidized/* /root/.config/oxidized
+
+touch "$LOCK_FILE"

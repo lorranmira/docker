@@ -1,0 +1,88 @@
+---
+#This sets a global username and passwords for logging in and getting config
+# TODO Pull from environment variables
+username: manager
+password: friend
+
+
+#This sets the default global product type. 
+model: alliedtelesis
+
+#This sets the frequency it goes and grabs config. 86400 seconds is 1 day. 
+interval: 86400
+#If you want to see log messages in /var/log/syslog, set to true
+use_syslog: false
+#Debug can be enabled to see what may be going wrong. Look in ~/.config/oxidized/logs/ for info
+debug: false
+threads: 30
+timeout: 20
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+# TODO Remove this
+# rest: 0.0.0.0:8888/oxidizedweb   # <<< Matt's
+rest: 0.0.0.0:8888
+next_adds_true: job
+
+#Set global optional variables such as enable password here. 
+vars:
+#  enable: supersecret
+  remove_secret: true
+groups: {}
+models: {}
+pid: "/root/.config/oxidized/pid"
+#Set whether SSH or Telnet should be used, or both attempted. I've only got SSH set. 
+input:
+  default: ssh
+  debug: false
+  ssh:
+    secure: false
+
+#This sets Oxidized to store configs in git repo.
+output:
+  default: git
+  git:
+    user: oxidized
+    email: oxidized@example.com
+    repo: "/root/oxidized/git-repos/default.git"
+
+
+# Group to password mapping for grants switches
+#groups:
+#  <groupname>:
+#    username: <user>
+#    password: <password>
+
+#source:
+#  default: csv
+#  csv:
+#    file: "/root/.config/oxidized/router.db"
+#    delimiter: !ruby/regexp /:/
+#    map:
+#      name: 0
+#      ip: 1
+#      model: 2
+#      group: 3
+
+source:
+   default: http
+   debug: true
+   http:
+     url: http://librenms/api/v0/oxidized
+     map:
+      name: hostname
+      model: os
+      group: group
+     headers:
+      X-Auth-Token: 'ec7b2ee0ed3a277ae4a471238b42fc71'
+
+
+#This configures a mapping of vendor to Model type used. 
+# The types such as ios, junos, awplus etc can be found
+# using cmd "gem contents oxidized". Version 0.20.0 is:
+#/var/lib/gems/2.3.0/gems/oxidized-0.20.0/lib/oxidized/model/
+
+
+model_map:
+  cisco: ios
+  juniper: junos
+  alliedtelesis: awplus

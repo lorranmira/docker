@@ -11,7 +11,7 @@ services:
 #      - /my/persistent/directory/logs:/opt/librenms/logs
 #      - /my/persistent/directory/rrd:/opt/librenms/rrd
     environment:
-      - DB_HOST=db
+      - DB_HOST=mysql
       - DB_NAME=librenms
       - DB_USER=librenms
       - DB_PASS=secret
@@ -21,14 +21,16 @@ services:
       - TZ="Pacific/Auckland"
     depends_on:
       - mysql
-    links:
-      - mysql:db
+    networks:
+      - backend
 
   mysql:
     image: mysql:5.6
 #    build:
 #      context: mysql
     command: --sql-mode=""
+    networks:
+      - backend
     ports:
       - "3306:3306"
 #    volumes:
@@ -39,3 +41,21 @@ services:
       - MYSQL_DATABASE=librenms
       - MYSQL_USER=librenms
       - MYSQL_PASSWORD=secret
+
+  oxidized:
+    # image: oxidized/oxidized:latest
+    build:
+      context: oxidized
+    networks:
+      - backend
+    ports:
+      - 8888:8888/tcp
+    environment:
+      CONFIG_RELOAD_INTERVAL: 600
+    depends_on:
+      - librenms
+    volumes:
+      - /opt/oxidized:/root/.config/oxidized
+
+networks:
+  backend:
