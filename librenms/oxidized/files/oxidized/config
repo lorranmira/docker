@@ -18,8 +18,6 @@ threads: 30
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-# TODO Remove this
-# rest: 0.0.0.0:8888/oxidizedweb   # <<< Matt's
 rest: 0.0.0.0:8888
 next_adds_true: job
 
@@ -43,7 +41,7 @@ output:
   git:
     user: oxidized
     email: oxidized@example.com
-    repo: "/root/oxidized/git-repos/default.git"
+    repo: "/root/.config/oxidized/git-repos/default.git"
 
 
 # Group to password mapping for grants switches
@@ -52,16 +50,6 @@ output:
 #    username: <user>
 #    password: <password>
 
-#source:
-#  default: csv
-#  csv:
-#    file: "/root/.config/oxidized/router.db"
-#    delimiter: !ruby/regexp /:/
-#    map:
-#      name: 0
-#      ip: 1
-#      model: 2
-#      group: 3
 
 source:
    default: http
@@ -73,7 +61,7 @@ source:
       model: os
       group: group
      headers:
-      X-Auth-Token: 'ec7b2ee0ed3a277ae4a471238b42fc71'
+      X-Auth-Token: 'REPLACE WITH VALID TOKEN'
 
 
 #This configures a mapping of vendor to Model type used. 
