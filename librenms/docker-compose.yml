@@ -19,6 +19,7 @@ services:
       - ENABLE_SYSLOG=false
       - TZ="Pacific/Auckland"
       - OXIDIZED_USERNAME=oxidized
+      - SCAN_ON_FIRST_STARTUP=true
     depends_on:
       - mysql
     networks:
