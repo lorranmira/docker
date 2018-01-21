@@ -15,10 +15,11 @@ sh -c "cd /opt/librenms && php /opt/librenms/build-base.php"
 # Create initial user
 php /opt/librenms/adduser.php manager friend 10
 
-# Create Oxidized user if wanted
+# Create Oxidized user if wanted and create API token for the user
 if [ -n "${OXIDIZED_USERNAME}" ]; then
     # TODO Need to randomise the password for security
     php /opt/librenms/adduser.php ${OXIDIZED_USERNAME} oxidized 10
+    sh -c "/opt/librenms/write_oxidized_api_token.py"
 fi
 
 # Scan networks and populate libreNMS
