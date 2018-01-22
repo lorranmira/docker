@@ -22,14 +22,4 @@ if [ -n "${OXIDIZED_USERNAME}" ]; then
     sh -c "/opt/librenms/write_oxidized_api_token.py"
 fi
 
-# Scan networks and populate libreNMS
-if [ -n "${SCAN_ON_FIRST_STARTUP}" ]; then
-    if [ "$SCAN_ON_FIRST_STARTUP" = "true" ]; then
-	    sh -c "/opt/librenms/snmp-scan.py"
-	    # These two scripts do take a while.  But only run once
-	    #sh -c "/opt/librenms/discovery-wrapper.py 16"
-	    #sh -c "/opt/librenms/poller-wrapper.py 16"
-    fi
-fi
-
 touch "$LOCK_FILE"

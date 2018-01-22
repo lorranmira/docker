@@ -1,0 +1,22 @@
+#!/bin/bash -eu
+
+LOCK_FILE=/var/lock/network_auto_discovery.lock
+
+echo "Starting Network Auto-discovery..."
+# Scan networks and populate libreNMS
+if [ -n "${SCAN_ON_FIRST_STARTUP}" ]; then
+    if [ "$SCAN_ON_FIRST_STARTUP" = "true" ] && [ ! -f "$LOCK_FILE" ]; then
+        # Scan all configured networks
+        sh -c "/opt/librenms/snmp-scan.py"
+        # Populate librenms with results of scan
+        sh -c ". /etc/librenms_environment; /opt/librenms/cronic /opt/librenms/discovery-wrapper.py 1"
+        sh -c ". /etc/librenms_environment; /opt/librenms/cronic /opt/librenms/poller-wrapper.py 16"
+    fi
+    touch "$LOCK_FILE"
+fi
+
+# Loop indefinitely so that 'service' remains up
+while true
+do
+    sleep 1
+done
