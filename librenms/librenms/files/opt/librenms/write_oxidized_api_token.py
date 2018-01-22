@@ -144,5 +144,4 @@ if __name__ == '__main__':
     commandLineArgumentParser.add_argument('-o', '--oxidized', dest='path_to_oxidized', type=str, default='',
                                            help='Location of Oxidized install')
     args = commandLineArgumentParser.parse_args()
-    print(args)
     main(args.oxidized_username, args.token_file, args.path_to_oxidized)
