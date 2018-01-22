@@ -1,32 +1,11 @@
 #!/bin/bash -e
 
 LOCK_FILE=/var/lock/9_firsttime.lock
-TOKEN_DIR="/tmp/token"
-TOKEN_FILE="/tmp/token/api_token"
-OXIDIZED_CONFIG_FILE="/tmp/oxidized/config"
 
 if [ -f "$LOCK_FILE" ]; then
 	exit 0
 fi
 
-# Check if there is a token file location.
-# If so.  Wait until the token file has been created
-if [ -d ${TOKEN_DIR} ]; then
-    while [ ! -f "$TOKEN_FILE" ]
-    do
-        sleep 1
-    done
-    # Read the token file
-    for line in $(cat ${TOKEN_FILE})
-    do
-        #echo $line
-        break
-    done
-    # Write the token file to the config file
-    sed -i "s/REPLACE WITH VALID TOKEN/$line/g" "${OXIDIZED_CONFIG_FILE}"
-fi
-
-# Copy to default files to working dir
-cp /tmp/oxidized/* /root/.config/oxidized
+sh -c "/root/.config/oxidized/get_librenms_api_token.sh"
 
 touch "$LOCK_FILE"
