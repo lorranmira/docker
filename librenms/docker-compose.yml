@@ -6,7 +6,8 @@ services:
       context: librenms
     ports:
       - "80:80"
-#    volumes:
+    volumes:
+      - oxidized_token:/tmp/token
 #      - /my/persistent/directory/logs:/opt/librenms/logs
 #      - /my/persistent/directory/rrd:/opt/librenms/rrd
     environment:
@@ -57,3 +58,6 @@ services:
 
 networks:
   backend:
+
+volumes:
+  oxidized_token:

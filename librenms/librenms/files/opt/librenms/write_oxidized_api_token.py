@@ -100,3 +100,8 @@ except:
     # Rollback in case there is any error
     db.rollback()
 db.close()
+
+# Write token to file
+if os.path.exists("/tmp/token"):
+    with open("/tmp/token/api_token", "w") as token_fh:
+        token_fh.write(token)
