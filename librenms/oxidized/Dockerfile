@@ -1,4 +1,4 @@
 FROM oxidized/oxidized:latest
 
-COPY files/oxidized /root/.config/oxidized
+COPY files/oxidized /tmp/oxidized
 COPY files/etc /etc

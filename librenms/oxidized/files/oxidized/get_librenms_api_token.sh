@@ -18,4 +18,7 @@ if [ -d ${TOKEN_DIR} ]; then
     done
     # Write the token file to the config file
     sed -i "s/REPLACE WITH VALID TOKEN/$line/g" "${OXIDIZED_CONFIG_FILE}"
+
+    # Delete the token file
+    rm -rf ${TOKEN_FILE}
 fi

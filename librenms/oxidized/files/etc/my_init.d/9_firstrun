@@ -6,6 +6,9 @@ if [ -f "$LOCK_FILE" ]; then
 	exit 0
 fi
 
+# Copy to default files to working dir
+cp /tmp/oxidized/* /root/.config/oxidized
+
 sh -c "/root/.config/oxidized/get_librenms_api_token.sh"
 
 touch "$LOCK_FILE"
