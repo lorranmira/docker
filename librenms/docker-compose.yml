@@ -42,6 +42,8 @@ services:
       - MYSQL_USER=librenms
       - MYSQL_PASSWORD=secret
 
+ ##### Plugins
+  # Config backup
   oxidized:
     build:
       context: oxidized
@@ -55,7 +57,16 @@ services:
       - librenms
     volumes:
       - oxidized_token:/tmp/token
-#      - /my/persistent/directory:/root/.config/oxidized
+      - /opt/docker/librenms/oxidized:/root/.config/oxidized
+
+  # ssh terminal server
+  gateone:
+    build:
+      context: gateone
+    networks:
+      - backend
+    ports:
+      - "8000:8000"
 
 networks:
   backend:
