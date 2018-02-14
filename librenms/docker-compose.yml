@@ -23,14 +23,10 @@ services:
       - SCAN_ON_FIRST_STARTUP=true
     depends_on:
       - mysql
-    networks:
-      - backend
 
   mysql:
     image: mysql:5.6
     command: --sql-mode=""
-    networks:
-      - backend
     ports:
       - "3306:3306"
 #    volumes:
@@ -47,8 +43,6 @@ services:
   oxidized:
     build:
       context: oxidized
-    networks:
-      - backend
     ports:
       - 8888:8888/tcp
     environment:
@@ -63,13 +57,8 @@ services:
   gateone:
     build:
       context: gateone
-    networks:
-      - backend
     ports:
       - "8000:8000"
-
-networks:
-  backend:
 
 volumes:
   oxidized_token:
