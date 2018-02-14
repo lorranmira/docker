@@ -9,6 +9,9 @@ fi
 # Sleep to allow MYSQL server to come up
 sleep 15
 
+## Update system if necessary
+sh -c "export HOME=/root && /opt/librenms/scripts/composer_wrapper.php install --no-dev"
+
 ## Create tables
 sh -c "cd /opt/librenms && php /opt/librenms/build-base.php"
 
