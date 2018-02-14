@@ -59,6 +59,8 @@ services:
       context: gateone
     ports:
       - "8000:8000"
+    volumes:
+      - oxidized_token:/tmp/token
 
 volumes:
   oxidized_token:
