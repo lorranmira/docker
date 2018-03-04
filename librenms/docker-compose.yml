@@ -12,13 +12,13 @@ services:
 #      - /my/persistent/directory/rrd:/opt/librenms/rrd
     environment:
       - DB_HOST=mysql
-      - DB_NAME=librenms
-      - DB_USER=librenms
-      - DB_PASS=secret
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
       - POLLERS=16
-      - BASE_URL=http://localhost
+      - BASE_URL=${BASE_URL}
       - ENABLE_SYSLOG=false
-      - TZ="Pacific/Auckland"
+      - TZ=${TZ}
       - OXIDIZED_USERNAME=oxidized
       - SCAN_ON_FIRST_STARTUP=true
     depends_on:
@@ -32,11 +32,10 @@ services:
 #    volumes:
 #      - /my/persistent/directory/mysql:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      # These values must match the DB{NAME|USER|PASS} in libreNMS container or server
-      - MYSQL_DATABASE=librenms
-      - MYSQL_USER=librenms
-      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
 
  ##### Plugins
   # Config backup
@@ -46,7 +45,8 @@ services:
     ports:
       - 8888:8888/tcp
     environment:
-      CONFIG_RELOAD_INTERVAL: 600
+      - CONFIG_RELOAD_INTERVAL=600
+      - TZ=${TZ}
     depends_on:
       - librenms
     volumes:
