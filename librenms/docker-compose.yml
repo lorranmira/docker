@@ -54,17 +54,17 @@ services:
       - oxidized_token:/tmp/token
       - /opt/docker/librenms/oxidized:/root/.config/oxidized
 
-  # ssh terminal server
-  gateone:
-    build:
-      context: gateone
-    ports:
-      - "8000:8000"
-    environment:
-      # Not sure if the container understands this variable
-      - TZ=${TZ}
-    volumes:
-      - oxidized_token:/tmp/token
+#  # ssh terminal server
+#  gateone:
+#    build:
+#      context: gateone
+#    ports:
+#      - "8000:8000"
+#    environment:
+#      # Not sure if the container understands this variable
+#      - TZ=${TZ}
+#    volumes:
+#      - oxidized_token:/tmp/token
 
   # Services for graylog plugin
   # MongoDB: https://hub.docker.com/_/mongo/
