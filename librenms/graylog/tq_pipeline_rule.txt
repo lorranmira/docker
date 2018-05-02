@@ -1,0 +1,7 @@
+rule "Check source for valid hostname/ip"
+when
+    contains(substring(to_string($message.source), -1), ":")
+then
+    //debug("BOOM");
+	set_field("source", to_string($message.gl2_remote_ip));
+end
