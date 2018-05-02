@@ -1,0 +1,35 @@
+{
+  "extractors": [
+    {
+      "title": "Extract AW+ Timestamp",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "%{YEAR} %{SYSLOGTIMESTAMP} %{GREEDYDATA:message}",
+        "named_captures_only": true
+      },
+      "condition_type": "regex",
+      "condition_value": "\\d\\d\\d\\d\\s\\w+\\s"
+    },
+    {
+      "title": "Extract Hostname, Program, PID",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 1,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "%{IPORHOST:source} %{SYSLOGPROG}?: %{GREEDYDATA:message}",
+        "named_captures_only": true
+      },
+      "condition_type": "regex",
+      "condition_value": "\\s(\\w+\\[\\d+\\]):"
+    }
+  ],
+  "version": "2.4.3"
+}
