@@ -105,7 +105,7 @@ services:
       # Load custom content packs
       - GRAYLOG_CONTENT_PACKS_LOADER_ENABLED=true
       - GRAYLOG_CONTENT_PACKS_DIR=data/contentpacks
-      - GRAYLOG_CONTENT_PACKS_AUTO_LOAD=grok-patterns.json, syslog_udp_input.json
+      - GRAYLOG_CONTENT_PACKS_AUTO_LOAD=grok-patterns.json, syslog_udp_input.json, extractor_program_pid.json
     links:
       - mongo
       - elasticsearch
