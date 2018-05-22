@@ -97,6 +97,7 @@ services:
 #      - graylog_journal:/usr/share/graylog/data/journal
       #- ./graylog/config:/usr/share/graylog/data/config
     environment:
+      - TZ=${TZ}
       # CHANGE ME!
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
       # Password: admin
