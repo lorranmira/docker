@@ -43,7 +43,7 @@
         "named_captures_only": true
       },
       "condition_type": "regex",
-      "condition_value": "^(\\w+\\[\\d+\\]|\\w+):"
+      "condition_value": "^([\\x21-\\x5a\\x5c\\x5e-\\x7e]+\\[\\d+\\]|[\\x21-\\x5a\\x5c\\x5e-\\x7e]+):"
     }
   ],
   "version": "2.4.3"
