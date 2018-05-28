@@ -6,8 +6,8 @@ if [ -f "$LOCK_FILE" ]; then
 	exit 0
 fi
 
-# Sleep to allow MYSQL server to come up
-sleep 15
+# Wait until the MYSQL server has come up
+sh -c '/tmp/token/wait-for-it/wait-for-it.sh mysql:3306 -t 0 -- echo "mysql up"'
 
 ## Update system if necessary
 #sh -c "export HOME=/root && /opt/librenms/scripts/composer_wrapper.php install --no-dev"
