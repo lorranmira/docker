@@ -79,8 +79,6 @@ services:
 #      - es_data:/usr/share/elasticsearch/data
     environment:
       - http.host=0.0.0.0
-      - transport.host=localhost
-      - network.host=0.0.0.0
       # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -97,7 +95,7 @@ services:
 #      - graylog_journal:/usr/share/graylog/data/journal
       #- ./graylog/config:/usr/share/graylog/data/config
     environment:
-      - TZ=${TZ}
+      - GRAYLOG_ROOT_TIMEZONE=${TZ}
       # CHANGE ME!
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
       # Password: admin

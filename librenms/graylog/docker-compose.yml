@@ -12,8 +12,6 @@ services:
 #      - es_data:/usr/share/elasticsearch/data
     environment:
       - http.host=0.0.0.0
-      - transport.host=localhost
-      - network.host=0.0.0.0
       # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -25,11 +23,12 @@ services:
   # Graylog: https://hub.docker.com/r/graylog/graylog/
   graylog:
     build:
-      context: graylog
+      context: .
 #    volumes:
 #      - graylog_journal:/usr/share/graylog/data/journal
       #- ./graylog/config:/usr/share/graylog/data/config
     environment:
+      - GRAYLOG_ROOT_TIMEZONE=Pacific/Auckland
       # CHANGE ME!
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
       # Password: admin
@@ -38,7 +37,7 @@ services:
       # Load custom content packs
       - GRAYLOG_CONTENT_PACKS_LOADER_ENABLED=true
       - GRAYLOG_CONTENT_PACKS_DIR=data/contentpacks
-      - GRAYLOG_CONTENT_PACKS_AUTO_LOAD=grok-patterns.json, syslog_udp_input.json, extractor_program_pid.json
+      - GRAYLOG_CONTENT_PACKS_AUTO_LOAD=grok-patterns.json,syslog_udp_input.json,extractor_program_pid.json,dashboard.json
     links:
       - mongo
       - elasticsearch
