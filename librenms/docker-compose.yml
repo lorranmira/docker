@@ -18,6 +18,7 @@ services:
       - POLLERS=16
       - BASE_URL=${BASE_URL}
       - ENABLE_SYSLOG=false
+      - APP_KEY=${APP_KEY}
       - TZ=${TZ}
       - OXIDIZED_USERNAME=oxidized
       - SCAN_ON_FIRST_STARTUP=true
