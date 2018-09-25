@@ -8,8 +8,8 @@ services:
       - "80:80"
     volumes:
       - oxidized_token:/tmp/token
-#      - /my/persistent/directory/logs:/opt/librenms/logs
-#      - /my/persistent/directory/rrd:/opt/librenms/rrd
+      - librenms_logs:/opt/librenms/logs
+      - librenms_rrd:/opt/librenms/rrd
     environment:
       - DB_HOST=mysql
       - DB_NAME=${DB_NAME}
@@ -29,8 +29,8 @@ services:
     command: --sql-mode=""
     ports:
       - "3306:3306"
-#    volumes:
-#      - /my/persistent/directory/mysql:/var/lib/mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
@@ -52,7 +52,7 @@ services:
       - librenms
     volumes:
       - oxidized_token:/tmp/token
-      - /opt/docker/librenms/oxidized:/root/.config/oxidized
+      - oxidized_config:/root/.config/oxidized
 
 #  # ssh terminal server
 #  gateone:
@@ -70,13 +70,13 @@ services:
   # MongoDB: https://hub.docker.com/_/mongo/
   mongo:
     image: mongo:3
-#    volumes:
-#      - mongo_data:/data/db
+    volumes:
+      - mongo_data:/data/db
   # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/docker.html
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
-#    volumes:
-#      - es_data:/usr/share/elasticsearch/data
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
     environment:
       - http.host=0.0.0.0
       # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
@@ -91,8 +91,8 @@ services:
   graylog:
     build:
       context: graylog
-#    volumes:
-#      - graylog_journal:/usr/share/graylog/data/journal
+    volumes:
+      - graylog_journal:/usr/share/graylog/data/journal
       #- ./graylog/config:/usr/share/graylog/data/config
     environment:
       - GRAYLOG_ROOT_TIMEZONE=${TZ}
@@ -121,6 +121,10 @@ services:
       - 12201:12201/udp
 
 volumes:
+  librenms_logs:
+  librenms_rrd:
+  mysql_data:
+  oxidized_config:
   oxidized_token:
   mongo_data:
     driver: local
