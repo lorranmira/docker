@@ -19,7 +19,7 @@ timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
 rest: 0.0.0.0:8888
-next_adds_true: job
+next_adds_job: true
 
 #Set global optional variables such as enable password here. 
 vars:
