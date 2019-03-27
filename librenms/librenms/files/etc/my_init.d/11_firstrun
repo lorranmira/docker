@@ -13,7 +13,7 @@ sh -c '/tmp/token/wait-for-it/wait-for-it.sh mysql:3306 -t 0 -- echo "mysql up"'
 #sh -c "export HOME=/root && /opt/librenms/scripts/composer_wrapper.php install --no-dev"
 
 # Update timezone for php
-sed -i "s#^;date.timezone =#date.timezone = ${TZ}#" /etc/php/7.2/fpm/php.ini
+sed -i "s#^;date.timezone =#date.timezone = ${TZ}#" /etc/php/7.3/fpm/php.ini
 
 ## Create tables
 sh -c "cd /opt/librenms && php /opt/librenms/build-base.php"
