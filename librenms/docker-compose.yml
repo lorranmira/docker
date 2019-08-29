@@ -6,6 +6,8 @@ services:
       context: librenms
     ports:
       - "80:80"
+      - "514:514"
+      - "514:514/udp"
     volumes:
       - oxidized_token:/tmp/token
       - librenms_logs:/opt/librenms/logs
@@ -23,6 +25,7 @@ services:
       - OXIDIZED_USERNAME=oxidized
       - SCAN_ON_FIRST_STARTUP=true
       - DAILY_ON_STARTUP=true
+      - ENABLE_SYSLOG=true
     depends_on:
       - mysql
 
